@@ -1,11 +1,13 @@
 <script setup>
 import ApplicationLogo from '@/Components/ApplicationLogo.vue';
 
+import { ArrowDownIcon, ArrowUpIcon ,PlusIcon } from '@heroicons/vue/20/solid'
+import { CursorArrowRaysIcon, EnvelopeOpenIcon, UsersIcon } from '@heroicons/vue/24/outline'
+
 const stats = [
-    { id: 1, name: 'Creators on the platform', value: '8,000+' },
-    { id: 2, name: 'Flat platform fee', value: '3%' },
-    { id: 3, name: 'Uptime guarantee', value: '99.9%' },
-    { id: 4, name: 'Paid out to creators', value: '$70M' },
+    { id: 1, name: 'Total Finished Projects', stat: '71,897', icon: UsersIcon, change: '122', changeType: 'increase' },
+    { id: 2, name: 'Total Pending Projects', stat: '58.16%', icon: EnvelopeOpenIcon, change: '5.4%', changeType: 'decrease' },
+    { id: 3, name: 'Total Artifacts', stat: '24.57%', icon: CursorArrowRaysIcon, change: '3.2%', changeType: 'increase' },
 ]
 </script>
 
@@ -15,32 +17,63 @@ const stats = [
 
 
             <h1 class="mt-4 text-2xl font-medium text-gray-900">
-                Your Dashboard
+                Welcome Home {{ $page.props.auth.user.name }}
             </h1>
 
-            <div class="relative mt-3 isolate overflow-hidden bg-gray-900 py-24 sm:py-32">
-                <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2850&q=80&blend=111827&blend-mode=multiply&sat=-100&exp=15" alt="" class="absolute inset-0 -z-10 h-full w-full object-cover" />
-                <div class="relative mx-auto max-w-7xl px-6 lg:px-8">
-                    <div class="absolute -bottom-8 -left-96 -z-10 transform-gpu blur-3xl sm:-bottom-64 sm:-left-40 lg:-bottom-32 lg:left-8 xl:-left-10" aria-hidden="true">
-                        <div class="aspect-[1266/975] w-[79.125rem] bg-gradient-to-tr from-[#ff4694] to-[#776fff] opacity-20" style="clip-path: polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)" />
-                    </div>
-                    <div class="mx-auto max-w-2xl lg:mx-0 lg:max-w-xl">
-                        <h2 class="text-base font-semibold leading-8 text-indigo-400">Our track record</h2>
-                        <p class="mt-2 text-3xl font-bold tracking-tight text-white sm:text-4xl">Trusted by thousands of creators&nbsp;worldwide</p>
-                        <p class="mt-6 text-lg leading-8 text-gray-300">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Maiores impedit perferendis suscipit eaque, iste dolor cupiditate blanditiis ratione.</p>
-                    </div>
-                    <dl class="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-10 text-white sm:mt-20 sm:grid-cols-2 sm:gap-y-16 lg:mx-0 lg:max-w-none lg:grid-cols-4">
-                        <div v-for="stat in stats" :key="stat.id" class="flex flex-col gap-y-3 border-l border-white/10 pl-6">
-                            <dt class="text-sm leading-6">{{ stat.name }}</dt>
-                            <dd class="order-first text-3xl font-semibold tracking-tight">{{ stat.value }}</dd>
+            <div>
+                <div class="mt-6">
+                    <h3 class="text-base font-semibold leading-6 text-gray-900">Stats for last 30 days</h3>
+
+                    <dl class="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+                        <div v-for="item in stats" :key="item.id" class="relative overflow-hidden rounded-lg bg-white px-4 pb-12 pt-5 shadow sm:px-6 sm:pt-6">
+                            <dt>
+                                <div class="absolute rounded-md bg-amber-500 p-3">
+                                    <component :is="item.icon" class="h-6 w-6 text-white" aria-hidden="true" />
+                                </div>
+                                <p class="ml-16 truncate text-sm font-medium text-gray-500">{{ item.name }}</p>
+                            </dt>
+                            <dd class="ml-16 flex items-baseline pb-6 sm:pb-7">
+                                <p class="text-2xl font-semibold text-gray-900">{{ item.stat }}</p>
+                                <p :class="[item.changeType === 'increase' ? 'text-green-600' : 'text-red-600', 'ml-2 flex items-baseline text-sm font-semibold']">
+                                    <ArrowUpIcon v-if="item.changeType === 'increase'" class="h-5 w-5 flex-shrink-0 self-center text-green-500" aria-hidden="true" />
+                                    <ArrowDownIcon v-else class="h-5 w-5 flex-shrink-0 self-center text-red-500" aria-hidden="true" />
+                                    <span class="sr-only"> {{ item.changeType === 'increase' ? 'Increased' : 'Decreased' }} by </span>
+                                    {{ item.change }}
+                                </p>
+                                <div class="absolute inset-x-0 bottom-0 bg-gray-50 px-4 py-4 sm:px-6">
+                                    <div class="text-sm">
+                                        <a href="#" class="font-medium text-amber-400 hover:text-indigo-500"
+                                        >View all<span class="sr-only"> {{ item.name }} stats</span></a
+                                        >
+                                    </div>
+                                </div>
+                            </dd>
                         </div>
                     </dl>
                 </div>
             </div>
+
+            <div class="mt-4">
+                <div class="text-center">
+                    <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                        <path vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 13h6m-3-3v6m-9 1V7a2 2 0 012-2h6l2 2h6a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
+                    </svg>
+                    <h3 class="mt-2 text-sm font-semibold text-gray-900">No projects</h3>
+                    <p class="mt-1 text-sm text-gray-500">Get started by creating a new project.</p>
+                    <div class="mt-6">
+
+                        <a type="button" :href="route('demo.client.index')" class="inline-flex items-center rounded-md bg-amber-400 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+
+                            <PlusIcon class="-ml-0.5 mr-1.5 h-5 w-5" aria-hidden="true" />
+                            New Project
+                        </a>
+
+                    </div>
+                </div>
+            </div>
+
         </div>
 
-        <div class="bg-gray-200 bg-opacity-25 grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8 p-6 lg:p-8">
 
-        </div>
     </div>
 </template>
