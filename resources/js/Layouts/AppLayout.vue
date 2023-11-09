@@ -208,7 +208,7 @@ const sidebarOpen = ref(false)
             </div>
         </nav>
 
-        <Banner />
+        <Banner class="w-2/3" />
         <div>
             <TransitionRoot as="template" :show="sidebarOpen">
                 <Dialog as="div" class="relative z-50 lg:hidden" @close="sidebarOpen = false">

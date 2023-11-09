@@ -1,6 +1,9 @@
 <?php
 
 use App\Http\Controllers\DemoClientController;
+use App\Http\Controllers\DesignBriefController;
+use App\Http\Controllers\DesignJobController;
+use App\Http\Controllers\PaymentController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -36,6 +39,20 @@ Route::middleware([
     })->name('dashboard');
 
     Route::get('/demo/client', [DemoClientController::class, 'index'])->middleware('auth')->name('demo.client.index');
+
+    //Payfast
+    Route::post('/payfast/form', [PaymentController::class, 'getPaymentFormDetails'])->middleware('auth')->name('payfast.form');
+    Route::post('/payfast/checkout', [PaymentController::class, 'checkout'])->middleware('auth')->name('payfast.checkout');
+    Route::get('/payfast/success', [PaymentController::class, 'showSuccess'])->middleware('auth')->name('payfast.success');
+
+    //Design Brief
+
+    Route::resource('design_brief', DesignBriefController::class)->middleware('auth')
+        ->only(['index','store']);
+
+    //Design Job
+    Route::resource('design_job', DesignJobController::class)->middleware('auth')
+        ->only(['index','store']);
 
 
 });
