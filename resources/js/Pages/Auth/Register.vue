@@ -11,9 +11,15 @@ import TextInput from '@/Components/TextInput.vue';
 const form = useForm({
     name: '',
     email: '',
+    last_legal_name:'',
     password: '',
     password_confirmation: '',
     terms: false,
+    user_type_id:1
+});
+
+const props = defineProps({
+    user_types:Object,
 });
 
 const submit = () => {
@@ -32,8 +38,9 @@ const submit = () => {
         </template>
 
         <form @submit.prevent="submit">
+
             <div>
-                <InputLabel for="name" value="Name" />
+                <InputLabel for="name" value="First Name" />
                 <TextInput
                     id="name"
                     v-model="form.name"
@@ -47,6 +54,20 @@ const submit = () => {
             </div>
 
             <div class="mt-4">
+                <InputLabel for="last_legal_name" value="Last Name" />
+                <TextInput
+                    id="last_legal_name"
+                    v-model="form.last_legal_name"
+                    type="text"
+                    class="mt-1 block w-full"
+                    required
+                    autofocus
+                    autocomplete="surname"
+                />
+                <InputError class="mt-2" :message="form.errors.last_legal_name" />
+            </div>
+
+            <div class="mt-4">
                 <InputLabel for="email" value="Email" />
                 <TextInput
                     id="email"
@@ -57,6 +78,20 @@ const submit = () => {
                     autocomplete="username"
                 />
                 <InputError class="mt-2" :message="form.errors.email" />
+            </div>
+
+            <div class="mt-4">
+                <InputLabel for="primary_user" value="User Type" />
+                <div class="mt-2">
+                    <select id="primary_user" v-model="form.user_type_id"
+                            class="input-filter-l block w-full rounded-md border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                        <option v-for="n in user_types" :key="n.id" :value="n.id">{{
+                                n.type
+                            }}
+                        </option>
+                    </select>
+                </div>
+                <InputError class="mt-2" :message="form.errors.user_type_id"/>
             </div>
 
             <div class="mt-4">

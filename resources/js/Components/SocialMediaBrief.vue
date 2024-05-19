@@ -36,6 +36,7 @@ router.on('finish', (event) => {
 let props = defineProps({
     passed_form: Object,
     sm_platforms:Object,
+    type_name:String
 });
 
 
@@ -54,9 +55,9 @@ const FileInput = ref(null);
 const UploadFile = () => {
 
     if (FileInput.value) {
-        form.file = FileInput.value.files[0];
+        form.file_1 = FileInput.value.files[0];
     }
-    if (form.file != null) {
+    if (form.file_1 != null) {
         form.post(route('import.process'), {
             errorBag: 'UploadFile',
             preserveScroll: true,
@@ -93,10 +94,13 @@ const clearFileInput = () => {
     }
 };
 
+let  formData = new FormData();
+
 const form = useForm({
     name: null,
     brand: null,
-    type:'Social Media',
+    file_1:null,
+    type:props.type_name,
     sm_goals: null,
     sm_target_audience: null,
     sm_brand_rules: null,
@@ -112,43 +116,51 @@ const form = useForm({
     sm_emoji_to_avoid: null,
     sm_emoji_to_use: null,
     sm_responsible: null,
-    sm_brand_colors: null
+    sm_brand_colors: null,
+    additional_notes:null
 
 });
 
 
 const createDesignBrief= () => {
 
-    /*form.post(route('design_brief.store'), {
-        preserveScroll: true,
-        onSuccess: (data) => {
-           console.log(data);
+    const fileInput = document.querySelector( '#file_1' );
+
+    formData.append( 'file_1', fileInput.files[0] );
+    formData.append( 'name', form.name );
+    formData.append( 'type', form.type );
+    formData.append( 'brand', form.brand );
+    formData.append( 'sm_goals', form.sm_goals );
+    formData.append( 'sm_target_audience', form.sm_target_audience );
+    formData.append( 'sm_brand_rules', form.sm_brand_rules );
+    formData.append( 'sm_guidelines', form.sm_guidelines );
+    formData.append( 'sm_desired_tone', form.sm_desired_tone);
+    formData.append( 'sm_brand_personality', form.sm_brand_personality );
+    formData.append( 'content_included', form.content_included );
+    formData.append( 'sm_post_frequency', form.sm_post_frequency );
+    formData.append( 'sm_kpi', form.sm_kpi  );
+    formData.append( 'sm_reporting_frequency', form.sm_reporting_frequency );
+    formData.append( 'sm_words_to_avoid', form.sm_words_to_avoid );
+    formData.append( 'sm_words_to_use', form.sm_words_to_use);
+    formData.append( 'sm_emoji_to_avoid', form.sm_emoji_to_avoid);
+    formData.append( 'sm_emoji_to_use', form.sm_emoji_to_use );
+    formData.append( 'sm_responsible', form.sm_responsible );
+    formData.append( 'sm_brand_colors', form.sm_brand_colors);
+    formData.append( 'additional_notes', form.additional_notes);
+    formData.append( 'sm_platforms', JSON.stringify(props.sm_platforms));
+
+
+
+    axios.post( route('design_brief.store'), formData )
+        .then( ( res ) => {
+            createdBriefId.value = res.data.id;
+            sendBrief(res.data.id);
             canPay();
-        },
-        onError: (e) => {
-            console.log(e);
-        },
-    });*/
 
-    axios.post(route('design_brief.store',{
-        name : 'test',
-        type : 'social_media'
-
-    }),[
-
-    ]).then((res) => {
-
-        createdBriefId.value = res.data.id;
-        console.log(res.data.id);
-        sendBrief(res.data.id);
-        canPay();
-        //tradeSlideProps.value = res.data;
-        // form.contract_type_id = res.data["contract_types"][0];
-
-    }).catch(err => {
-        console.log(err.response.data)
-    });
-
+        } )
+        .catch( ( error ) => {
+            console.log(error.response.data)
+        } );
 
 };
 
@@ -498,7 +510,12 @@ const test_styler = computed(() => "z-40 shadow-xl");
                                                                                 <label
                                                                                     class="block text-sm font-medium leading-6 text-gray-900">Select file 1:</label>
 
-                                                                                <input
+                                                                            <input id="file_1" type="file" @input="form.file_1 = $event.target.files[0]" />
+                                                                            <progress v-if="form.progress" :value="form.progress.percentage" max="100">
+                                                                              {{ form.progress.percentage }}%
+                                                                            </progress>
+
+<!--                                                                                <input
                                                                                     ref="FileInput"
                                                                                     type="file"
                                                                                     class="hidden"
@@ -519,7 +536,7 @@ const test_styler = computed(() => "z-40 shadow-xl");
                                                                                                  type="button"
                                                                                                  @click.prevent="selectNewFile">
                                                                                     Select A File
-                                                                                </SecondaryButton>
+                                                                                </SecondaryButton>-->
 
                                                                             </div>
                                                                     </span>
@@ -527,7 +544,7 @@ const test_styler = computed(() => "z-40 shadow-xl");
 
                                             </div>
                                         </li>
-                                        <li class="flex items-center justify-between py-4 pl-4 pr-5 text-sm leading-6">
+<!--                                        <li class="flex items-center justify-between py-4 pl-4 pr-5 text-sm leading-6">
                                             <div class="flex w-0 flex-1 items-center">
                                                 <div class="ml-4 flex min-w-0 flex-1 gap-2">
 
@@ -602,7 +619,7 @@ const test_styler = computed(() => "z-40 shadow-xl");
                                                 </div>
 
                                             </div>
-                                        </li>
+                                        </li>-->
 
 
                                     </ul>
@@ -665,6 +682,7 @@ const test_styler = computed(() => "z-40 shadow-xl");
 
                                     <AreaInput
                                         id="comments"
+                                        v-model="form.additional_notes"
                                         :rows=6
                                         placeholder="Optional notes..."
                                         type="text"
@@ -687,7 +705,6 @@ const test_styler = computed(() => "z-40 shadow-xl");
             <div class="mt-5 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
 
                 <div class="col-span-4">
-
                     <SecondaryButton @click="prevStep"  class="m-1">
                        Back
                     </SecondaryButton>

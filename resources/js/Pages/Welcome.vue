@@ -15,8 +15,8 @@
                             <h1 class="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">Welcome to BadgerCo.</h1>
                             <p class="mt-6 text-lg leading-8 text-gray-600">Outsourcing becomes a breeze with our platform.</p>
                             <div class="mt-10 flex items-center justify-center gap-x-6">
-                                <a href="#" class="rounded-md bg-amber-400 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-400">Get started</a>
-                                <a href="#" class="text-sm font-semibold leading-6 text-gray-900">Learn more <span aria-hidden="true">→</span></a>
+                                <a :href="route('register')" class="rounded-md bg-amber-400 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-400">Register</a>
+                                <a :href="route('login')" class="text-sm font-semibold leading-6 text-gray-900">Log in <span aria-hidden="true">→</span></a>
                             </div>
                         </div>
                     </div>
@@ -26,7 +26,7 @@
                 </div>
             </div>
 
-            <!-- Logo cloud -->
+<!--            &lt;!&ndash; Logo cloud &ndash;&gt;
             <div class="mx-auto max-w-7xl px-6 lg:px-8">
                 <div class="mx-auto grid max-w-lg grid-cols-4 items-center gap-x-8 gap-y-12 sm:max-w-xl sm:grid-cols-6 sm:gap-x-10 sm:gap-y-14 lg:mx-0 lg:max-w-none lg:grid-cols-5">
                     <img class="col-span-2 max-h-12 w-full object-contain lg:col-span-1" src="https://tailwindui.com/img/logos/158x48/transistor-logo-gray-900.svg" alt="Transistor" width="158" height="48" />
@@ -43,7 +43,7 @@
                 </div>
             </div>
 
-            <!-- Feature section -->
+            &lt;!&ndash; Feature section &ndash;&gt;
             <div class="mx-auto mt-32 max-w-7xl px-6 sm:mt-56 lg:px-8">
                 <div class="mx-auto max-w-2xl lg:text-center">
                     <h2 class="text-base font-semibold leading-7 text-amber-400">Deploy faster</h2>
@@ -65,7 +65,7 @@
                 </div>
             </div>
 
-            <!-- Testimonial section -->
+            &lt;!&ndash; Testimonial section &ndash;&gt;
             <div class="mx-auto mt-32 max-w-7xl sm:mt-56 sm:px-6 lg:px-8">
                 <div class="relative overflow-hidden bg-gray-900 px-6 py-20 shadow-xl sm:rounded-3xl sm:px-10 sm:py-24 md:px-12 lg:px-20">
                     <img class="absolute inset-0 h-full w-full object-cover brightness-150 saturate-0" src="https://images.unsplash.com/photo-1601381718415-a05fb0a261f3?ixid=MXwxMjA3fDB8MHxwcm9maWxlLXBhZ2V8ODl8fHxlbnwwfHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1216&q=80" alt="" />
@@ -91,7 +91,7 @@
                 </div>
             </div>
 
-            <!-- Pricing section -->
+            &lt;!&ndash; Pricing section &ndash;&gt;
             <div class="py-24 sm:pt-48">
                 <div class="mx-auto max-w-7xl px-6 lg:px-8">
                     <div class="mx-auto max-w-4xl text-center">
@@ -124,7 +124,7 @@
                 </div>
             </div>
 
-            <!-- FAQs -->
+            &lt;!&ndash; FAQs &ndash;&gt;
             <div class="mx-auto max-w-2xl divide-y divide-gray-900/10 px-6 pb-8 sm:pb-24 sm:pt-12 lg:max-w-7xl lg:px-8 lg:pb-32">
                 <h2 class="text-2xl font-bold leading-10 tracking-tight text-gray-900">Frequently asked questions</h2>
                 <dl class="mt-10 space-y-8 divide-y divide-gray-900/10">
@@ -137,7 +137,7 @@
                 </dl>
             </div>
 
-            <!-- CTA section -->
+            &lt;!&ndash; CTA section &ndash;&gt;
             <div class="relative -z-10 mt-32 px-6 lg:px-8">
                 <div class="absolute inset-x-0 top-1/2 -z-10 flex -translate-y-1/2 transform-gpu justify-center overflow-hidden blur-3xl sm:bottom-0 sm:right-[calc(50%-6rem)] sm:top-auto sm:translate-y-0 sm:transform-gpu sm:justify-end" aria-hidden="true">
                     <div class="aspect-[1108/632] w-[69.25rem] flex-none bg-gradient-to-r from-[#ed874c] to-[#fce092] opacity-25" style="clip-path: polygon(73.6% 48.6%, 91.7% 88.5%, 100% 53.9%, 97.4% 18.1%, 92.5% 15.4%, 75.7% 36.3%, 55.3% 52.8%, 46.5% 50.9%, 45% 37.4%, 50.3% 13.1%, 21.3% 36.2%, 0.1% 0.1%, 5.4% 49.1%, 21.4% 36.4%, 58.9% 100%, 73.6% 48.6%)" />
@@ -154,10 +154,12 @@
                     <div class="aspect-[1155/678] w-[72.1875rem] bg-gradient-to-tr from-[#ed874c] to-[#fce092] opacity-30" style="clip-path: polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)" />
                 </div>
             </div>
+            -->
+
         </main>
 
         <!-- Footer -->
-        <div class="mx-auto mt-32 max-w-7xl px-6 lg:px-8">
+<!--        <div class="mx-auto mt-32 max-w-7xl px-6 lg:px-8">
             <footer aria-labelledby="footer-heading" class="relative border-t border-gray-900/10 py-24 sm:mt-56 sm:py-32">
                 <h2 id="footer-heading" class="sr-only">Footer</h2>
                 <div class="xl:grid xl:grid-cols-3 xl:gap-8">
@@ -202,7 +204,7 @@
                     </div>
                 </div>
             </footer>
-        </div>
+        </div>-->
     </div>
 </template>
 

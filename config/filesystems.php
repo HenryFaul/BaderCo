@@ -55,6 +55,20 @@ return [
             'use_path_style_endpoint' => env('AWS_USE_PATH_STYLE_ENDPOINT', false),
             'throw' => false,
         ],
+        'log_brand_assets' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/log_brand_assets'),
+            'url' => env('APP_URL').'/storage/log_brand_assets',
+            'visibility' => 'public',
+            'throw' => false,
+        ],
+        'public_assets' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/public_assets'),
+            'url' => env('APP_URL').'/storage/public_assets',
+            'visibility' => 'public',
+            'throw' => false,
+        ],
 
     ],
 

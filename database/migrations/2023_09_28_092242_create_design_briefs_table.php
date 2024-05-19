@@ -12,8 +12,6 @@ return new class extends Migration
     public function up(): void
     {
 
-
-
         Schema::create('design_briefs', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('user_id')->unsigned();
@@ -39,6 +37,9 @@ return new class extends Migration
             $table->text('person_to_sign_off')->nullable();
             $table->text('brand_colours')->nullable();
             $table->string('asset_link')->nullable();
+            $table->string('file_link')->nullable();
+            $table->string('file_name')->nullable();
+            $table->string('file_public_url')->nullable();
             $table->json('sm_platforms')->nullable();
             $table->text('additional_notes')->nullable();
             $table->softDeletes();

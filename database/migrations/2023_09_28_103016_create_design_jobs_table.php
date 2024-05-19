@@ -45,6 +45,10 @@ return new class extends Migration
             $table->foreign('payment_status_id')
                 ->references('id')->on('payment_statuses')->onDelete('cascade');
 
+            $table->integer('del_id')->default(0);
+            $table->integer('del_sub_id')->default(0);
+            $table->integer('style_ref_id')->default(0);
+
             $table->softDeletes();
             $table->timestamps();
         });

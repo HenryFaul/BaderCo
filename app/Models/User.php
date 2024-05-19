@@ -3,7 +3,9 @@
 namespace App\Models;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
@@ -19,6 +21,11 @@ class User extends Authenticatable
     use Notifiable;
     use TwoFactorAuthenticatable;
     use HasRoles;
+
+    public function UserDetail(): HasOne
+    {
+        return $this->hasOne(UserDetail::class);
+    }
 
     /**
      * The attributes that are mass assignable.
@@ -60,4 +67,17 @@ class User extends Authenticatable
     protected $appends = [
         'profile_photo_url',
     ];
+
+    public function scopeFilter(Builder $query, array $filters): Builder
+    {
+        return $query->when(
+            $filters['searchName'] ?? false,
+            fn ($query, $value) => $query->where('name', 'like', '%'.$value.'%')
+        )->when(
+            $filters['field'] ?? false,
+            fn ($query, $value) =>
+            $query->orderBy($value, $filters['direction'] ?? 'asc')
+        );
+
+    }
 }
